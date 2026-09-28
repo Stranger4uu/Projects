@@ -5,20 +5,6 @@ const pool = require('./db')
 const app = express()
 const port = 3000
 
-const restaurants =[
-    {
-        id : 1,
-        name: 'Student cafe',
-        area: 'Sitapura',
-        cuisine: 'Cafe',
-    },
-    {
-        id: 2,
-        name: 'Oslo',
-        area: 'Jagatpura',
-        cuisine: 'Indian',
-    }
-]
 
 
 app.get('/health',(req, res) => {
@@ -27,8 +13,47 @@ app.get('/health',(req, res) => {
     })
 })
 
-app.get('/v1/restaurants', (req, res) => {
-    res.status(200).json(restaurants)
+/* 
+async = allows the handler to wait for database work.
+
+pool.query(...) = sends the SQL to PostgreSQL using the pool from db.js.
+
+await = waits for PostgreSQL’s reply before continuing.
+
+result.rows = contains the restaurant objects. res.json(...) sends them to Postman.
+*/
+
+app.get('/v1/restaurants',async (req, res) => {
+    const result = await pool.query(
+        'SElECT id, name, area, cuisine FROM restaurants ORDER BY id'
+    )
+    res.status(200).json(result.rows)
+})
+
+// API for one restaurant 
+/* 
+:id = is a route parameter. For /v1/restaurants/1, Express puts "1" in req.params.id.
+
+$1 = is a PostgreSQL placeholder. [id] supplies its value safely; don’t build SQL by joining user input into the string.
+
+rows[0] = returns one restaurant; an empty rows array means no restaurant matched.
+
+404 = tells the client that restaurant wasn’t found.
+*/
+
+app.get('/v1/restaurants/:id', async (req, res)=>{
+    const id = req.params.id
+
+    const result = await pool.query(
+        'SELECT id, name, area, cuisine FROM restaurants WHERE id=$1',
+        [id]
+    )
+
+    if (result.rows.length === 0){
+        return res.status(404).json({error : 'Restaurant not found'})
+    }
+
+    return res.status(200).json(result.rows[0])
 })
 
 app.listen(port, () => {
