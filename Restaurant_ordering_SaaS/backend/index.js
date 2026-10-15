@@ -80,6 +80,8 @@ app.use((error, req, res, next) => {
     res.status(500).json({error : 'Internal server error'})
 })
 
+
+
 app.listen(port, () => {
     console.log(`server is running on http://localhost:${port}`)
 })
