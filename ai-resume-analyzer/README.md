@@ -39,6 +39,6 @@ The built-in rubric estimates résumé readiness from extracted text and a limit
 
 ## Hosting and removal
 
-GitHub Pages serves the checked-in `demo/` build using the repository's existing publishing source. Rebuild after app changes, then commit and publish the updated `demo/` files. When the presentation is over, remove only `ai-resume-analyzer/demo/` from the publishing branch to take the URL down. The source can still be run locally with the commands above.
+GitHub Pages serves the static files from `codex/resume-lens-pages`, which also includes the files for the existing homepage. The source and a reproducible build are on `main`. To update the demo, rebuild it on `main` and replace only `ai-resume-analyzer/demo/` on the publishing branch with the rebuilt directory. When the presentation is over, remove that same directory from the publishing branch and push to take down the demo URL. The source remains available on `main`.
 
 The public build downloads app assets and a pinned [quantized MiniLM model](https://huggingface.co/Xenova/all-MiniLM-L6-v2/tree/751bff37182d3f1213fa05d7196b954e230abad9) and runs inference in the browser. Résumé text and job descriptions are never included in those requests. Keep real résumés and academic submission files out of the public repository.
