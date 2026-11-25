@@ -4,7 +4,7 @@ export async function extract(file: File): Promise<string> {
   const extension = file.name.split('.').pop()?.toLowerCase()
   if (!['pdf', 'docx', 'txt'].includes(extension ?? '')) throw new Error('Choose a PDF, DOCX, or TXT file.')
   if (file.size > MAX_FILE) throw new Error('Choose a file smaller than 5 MB.')
-  if (!file.size) throw new Error('This file is empty. Choose a résumé with readable text.')
+  if (!file.size) throw new Error('This file is empty. Choose a resume with readable text.')
 
   let text: string
   try {
@@ -45,6 +45,6 @@ export async function extract(file: File): Promise<string> {
   text = text.trim()
   if (text.length < 20) throw new Error(extension === 'pdf'
     ? 'No readable text found. If this PDF is a scan, upload a text-based PDF, DOCX, or TXT instead.'
-    : 'This file contains too little readable text. Choose a complete résumé.')
+    : 'This file contains too little readable text. Choose a complete resume.')
   return text
 }

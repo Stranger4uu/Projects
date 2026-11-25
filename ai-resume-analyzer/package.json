@@ -1,7 +1,7 @@
 {
   "name": "ai-resume-analyzer",
   "version": "1.0.0",
-  "description": "JECRC University student prototype for ATS-style résumé feedback",
+  "description": "JECRC University student prototype for ATS-style resume feedback",
   "scripts": {
     "test": "node --test tests/*.test.ts",
     "dev": "vite --host 127.0.0.1",

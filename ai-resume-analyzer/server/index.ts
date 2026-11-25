@@ -20,7 +20,7 @@ function json(response: ServerResponse, status: number, body: object) {
 
 async function analyzeRequest(request: IncomingMessage, response: ServerResponse) {
   if (request.headers['content-type']?.split(';')[0].trim().toLowerCase() !== 'application/json') {
-    json(response, 415, { error: 'Send the résumé text as JSON.' })
+    json(response, 415, { error: 'Send the resume text as JSON.' })
     request.resume()
     return
   }

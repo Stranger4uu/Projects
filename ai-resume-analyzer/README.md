@@ -1,6 +1,6 @@
 # Resume Lens
 
-Resume Lens is a JECRC University student prototype. It reads a text-based PDF, DOCX, or TXT résumé and gives an estimated applicant tracking system (ATS) score, skill coverage, and prioritized suggestions. Try the fictional sample to demonstrate it without collecting anyone's résumé.
+Resume Lens is a JECRC University student prototype. It reads a text-based PDF, DOCX, or TXT resume and gives an estimated applicant tracking system (ATS) score, skill coverage, and prioritized suggestions. Try the fictional sample to demonstrate it without collecting anyone's resume.
 
 [Open the public demo](https://stranger4uu.github.io/Projects/ai-resume-analyzer/demo/)
 
@@ -27,10 +27,10 @@ Open http://127.0.0.1:4174. This version serves the same built UI and sends extr
 
 1. Select or drop a PDF, DOCX, or UTF-8 TXT file up to 5 MB. PDFs must have selectable text and at most 25 pages.
 2. Use General review, choose a role, or paste up to 6,000 characters of job description.
-3. Analyze the résumé and open the scoring explanation. Review keyword coverage and the suggested next edits.
-4. For a role-based review, the AI evidence panel looks for related résumé bullets. The first model download requires internet access. The score and suggestions are available while the model loads and if it cannot load.
+3. Analyze the resume and open the scoring explanation. Review keyword coverage and the suggested next edits.
+4. For a role-based review, the AI evidence panel looks for related resume bullets. The first model download requires internet access. The score and suggestions are available while the model loads and if it cannot load.
 
-The built-in rubric estimates résumé readiness from extracted text and a limited skill dictionary. It cannot check how a particular employer's ATS will parse the file. Visual layout checks, OCR, accounts, and stored history are outside this prototype.
+The built-in rubric estimates resume readiness from extracted text and a limited skill dictionary. It cannot check how a particular employer's ATS will parse the file. Visual layout checks, OCR, accounts, and stored history are outside this prototype.
 
 ## Local HTTP API
 
@@ -41,4 +41,4 @@ The built-in rubric estimates résumé readiness from extracted text and a limit
 
 GitHub Pages serves the static files from `codex/resume-lens-pages`, which also includes the files for the existing homepage. The source and a reproducible build are on `main`. To update the demo, rebuild it on `main` and replace only `ai-resume-analyzer/demo/` on the publishing branch with the rebuilt directory. When the presentation is over, remove that same directory from the publishing branch and push to take down the demo URL. The source remains available on `main`.
 
-The public build downloads app assets and a pinned [quantized MiniLM model](https://huggingface.co/Xenova/all-MiniLM-L6-v2/tree/751bff37182d3f1213fa05d7196b954e230abad9) and runs inference in the browser. Résumé text and job descriptions are never included in those requests. Keep real résumés and academic submission files out of the public repository.
+The public build downloads app assets and a pinned [quantized MiniLM model](https://huggingface.co/Xenova/all-MiniLM-L6-v2/tree/751bff37182d3f1213fa05d7196b954e230abad9) and runs inference in the browser. Resume text and job descriptions are never included in those requests. Keep real resumes and academic submission files out of the public repository.

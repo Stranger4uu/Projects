@@ -51,10 +51,10 @@ function mentioned(text: string, skill: Skill) {
 
 export class InputError extends Error {}
 export function validateInput(data: unknown): Input {
-  if (!data || typeof data !== 'object') throw new InputError('Provide résumé text to analyze.')
+  if (!data || typeof data !== 'object') throw new InputError('Provide resume text to analyze.')
   const { text, role, job } = data as Partial<Input>
   if (typeof text !== 'string' || text.trim().length < 20 || text.length > MAX_TEXT)
-    throw new InputError('Use a résumé with between 20 and 50,000 characters of readable text.')
+    throw new InputError('Use a resume with between 20 and 50,000 characters of readable text.')
   if (role !== undefined && (typeof role !== 'string' || !Object.hasOwn(roles, role)))
     throw new InputError('Choose a supported target role.')
   if (job !== undefined && (typeof job !== 'string' || job.length > MAX_JOB))
@@ -91,13 +91,13 @@ export function analyze(input: Input) {
       (Number(hasSection.education) + Number(hasSection.skills) + Number(hasSection.experience || hasSection.projects) + Number(hasSection.summary)) / 4,
       'Recognizable headings for education, skills, experience or projects, and a summary.'),
     points('Contact details', targeted ? 10 : 15, Number(email) * 0.6 + Number(phone) * 0.4,
-      'Email and a phone number near the top of the résumé.'),
+      'Email and a phone number near the top of the resume.'),
     points('Evidence of impact', targeted ? 25 : 35, 0.5 * Math.min(actionLines.length / 3, 1) + 0.5 * Math.min(impactLines.length / 2, 1),
       'Up to three action-led bullets and two bullets with measurable outcomes.'),
     points('Readability', targeted ? 15 : 20, Number(words >= 100 && words <= 750) * 0.5 + Number(!longLine) * 0.3 + Number(lines.length >= 7) * 0.2,
       'Text-based checks for length, concise lines, and line breaks.'),
   ]
-  if (targeted) checks.push(points('Skill coverage', 25, matched.length / target.length, 'Share of recognized target skills present in your résumé.'))
+  if (targeted) checks.push(points('Skill coverage', 25, matched.length / target.length, 'Share of recognized target skills present in your resume.'))
 
   const tips: Tip[] = []
   if (missing.length) tips.push({ title: 'Back up relevant skills', detail: `The target mentions ${missing.slice(0, 6).join(', ')}. If you have used a skill, describe where and how. Prioritize genuine gaps for practice.` })

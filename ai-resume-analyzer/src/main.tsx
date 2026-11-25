@@ -77,15 +77,15 @@ function Results({ data, filename, status, matches, heading }: {
     </div>}
     <div className="result-section"><h3>Recommended improvements</h3>
       {data.tips.length ? <ol className="tips">{data.tips.map((tip) => <li key={tip.title}><strong>{tip.title}</strong><p>{tip.detail}</p>
-        {tip.excerpt && <blockquote>{tip.excerpt}</blockquote>}</li>)}</ol> : <p>Your résumé passes the current checks. Read each bullet once for clarity and accuracy.</p>}
+        {tip.excerpt && <blockquote>{tip.excerpt}</blockquote>}</li>)}</ol> : <p>Your resume passes the current checks. Read each bullet once for clarity and accuracy.</p>}
     </div>
     {status !== 'idle' && <div className="result-section"><h3><Sparkles size={17} /> AI evidence review</h3>
       <div role="status">
-        {status === 'loading' && <p>Loading the AI model and looking for related résumé excerpts. The score and recommendations are ready.</p>}
+        {status === 'loading' && <p>Loading the AI model and looking for related resume excerpts. The score and recommendations are ready.</p>}
         {status === 'error' && <p>The AI evidence review is unavailable. Your score and recommendations are ready.</p>}
         {status === 'done' && (matches.length ? <ul className="tips comparisons">{matches.map((match) =>
           <li key={match.requirement}><strong>{match.requirement}</strong><blockquote>{match.excerpt}</blockquote></li>)}</ul>
-          : <p>No close matches were found in the detected résumé bullets.</p>)}
+          : <p>No close matches were found in the detected resume bullets.</p>)}
       </div>
       {status === 'done' && matches.length > 0 && <p className="notice">These excerpts may relate to the target. Review the connection before relying on it.</p>}
     </div>}
@@ -149,7 +149,7 @@ function App() {
     clearResult()
     if (files.length !== 1) {
       setFile(null)
-      setError('Choose one résumé at a time.')
+      setError('Choose one resume at a time.')
       return
     }
     const selected = files[0]
@@ -164,7 +164,7 @@ function App() {
   async function run(useSample = false) {
     if (submitting.current) return
     if (!useSample && !file) {
-      setError('Choose a résumé before analyzing.')
+      setError('Choose a resume before analyzing.')
       fileInput.current?.focus()
       return
     }
@@ -199,9 +199,9 @@ function App() {
         data = analyze(input)
       }
       if (data.requirements.length && data.bullets.length) setStatus('loading')
-      setResult({ data, filename: useSample ? 'Sample résumé' : file!.name })
+      setResult({ data, filename: useSample ? 'Sample resume' : file!.name })
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Something went wrong. Try another résumé.')
+      setError(cause instanceof Error ? cause.message : 'Something went wrong. Try another resume.')
     } finally {
       setBusy(false)
       submitting.current = false
@@ -222,12 +222,12 @@ function App() {
       <section className="hero" aria-labelledby="title">
         <div className="hero-ambient" aria-hidden="true" />
         <div className="eyebrow"><Sparkles size={15} /> AI RESUME ANALYZER</div>
-        <h1 id="title">See your résumé<br className="desktop-break" /> <em>through an ATS lens.</em></h1>
-        <p>Get an estimated ATS score, find gaps in your résumé, and see what to improve before you apply.</p>
+        <h1 id="title">See your resume<br className="desktop-break" /> <em>through an ATS lens.</em></h1>
+        <p>Get an estimated ATS score, find gaps in your resume, and see what to improve before you apply.</p>
       </section>
       <div className="workspace">
-        <section className="panel upload-panel" aria-label="Résumé upload">
-          <PanelHeading icon={<FileText size={22} />} title="Analyze your résumé" description="Upload a file to get feedback in seconds." />
+        <section className="panel upload-panel" aria-label="Resume upload">
+          <PanelHeading icon={<FileText size={22} />} title="Analyze your resume" description="Upload a file to get feedback in seconds." />
           <form onSubmit={submit}>
             <div className={`drop-zone ${drag ? 'dragging' : ''} ${file ? 'has-file' : ''}`}
               onDragEnter={(event) => { event.preventDefault(); if (!busy && event.dataTransfer.types.includes('Files')) { dragDepth.current++; setDrag(true) } }}
@@ -238,11 +238,11 @@ function App() {
                 onChange={(event) => { choose(event.currentTarget.files); event.currentTarget.value = '' }} />
               <label htmlFor="resume-file">
                 <span className="upload-icon">{file ? <FileText size={25} /> : <UploadCloud size={27} />}</span>
-                <strong>{file ? file.name : 'Drag and drop your résumé'}</strong>
+                <strong>{file ? file.name : 'Drag and drop your resume'}</strong>
                 <span>{file ? 'Click to replace this file' : <>or <b>browse files</b></>}</span>
                 <small>{file ? `${(file.size / 1024).toFixed(1)} KB` : 'PDF, DOCX, TXT · Up to 5 MB'}</small>
               </label>
-              {file && <button type="button" className="remove" aria-label="Remove résumé" title="Remove résumé" disabled={busy}
+              {file && <button type="button" className="remove" aria-label="Remove resume" title="Remove resume" disabled={busy}
                 onClick={() => { setFile(null); clearResult(); fileInput.current?.focus() }}><X size={17} /></button>}
             </div>
             <div className="target">
@@ -263,18 +263,18 @@ function App() {
             </div>
             {error && <p className="error" role="alert"><CircleAlert size={17} />{error}</p>}
             <div className="form-actions">
-              <button className="primary" type="submit" disabled={busy}><Sparkles size={17} />{busy ? 'Analyzing…' : 'Analyze résumé'}</button>
+              <button className="primary" type="submit" disabled={busy}><Sparkles size={17} />{busy ? 'Analyzing…' : 'Analyze resume'}</button>
               <button className="secondary" type="button" disabled={busy} onClick={() => void run(true)}>Try a sample <ArrowUpRight size={16} /></button>
             </div>
           </form>
-          <p className="privacy"><LockKeyhole size={15} /> {local ? 'Local API mode · Analysis stays on this device.' : 'Your résumé stays in this browser.'}</p>
+          <p className="privacy"><LockKeyhole size={15} /> {local ? 'Local API mode · Analysis stays on this device.' : 'Your resume stays in this browser.'}</p>
         </section>
         {result ? <Results data={result.data} filename={result.filename} status={status} matches={matches} heading={heading} /> : <Preview />}
       </div>
       <section id="how-it-works" className="how">
         <h2>How it works</h2>
         <div className="how-grid">
-          <article><Focus size={21} /><div><h3>Read the résumé</h3><p>Extract readable text from your file.</p></div></article>
+          <article><Focus size={21} /><div><h3>Read the resume</h3><p>Extract readable text from your file.</p></div></article>
           <article><Gauge size={21} /><div><h3>Check ATS readiness</h3><p>Review structure, impact, and relevant skills.</p></div></article>
           <article><ClipboardList size={21} /><div><h3>Make your next edit</h3><p>Start with the suggestions that matter most.</p></div></article>
         </div>
